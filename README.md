@@ -56,10 +56,14 @@ To merge the dataframes, we took the following steps:
 
 With the other modifications that we discuss in the introduction section, we were left with a dataset head that looked like this. 
 
-<iframe src="./dataframe_head.html" width="800" height="600"></iframe>
+<iframe src="assets/dataframe_head.html" width="800" height="600"></iframe>
+
+
 
 
 And the following columns:
+
+
 | **Column Name**      | **Description**                                                                                              | **How It Was Obtained**                                                                                                                   |
 |-----------------------|------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
 | `name`               | The name of the recipe.                                                                                   | Directly from the original dataset.                                                                                                       |
@@ -95,20 +99,20 @@ And the following columns:
 First, univariate analysis was performed on the protein proportion column to see the distribution of protein percentage in the dataset. This clearly demonstartes that most meals have a fairly low proportion of protein
 
 
-<iframe src="./protein_distribution.html" width="800" height="600"></iframe>
+<iframe src="assets/protein_distribution.html" width="800" height="600"></iframe>
 
 Next, we performed univariate analysis on the n-steps column to see its distribution as well. This demonstrates that most recipes don't have that many steps and suggests an overall lesser complexity than I initially thought
 
-<iframe src="./n_steps.html" width="800" height="600"></iframe>
+<iframe src="assets/n_steps.html" width="800" height="600"></iframe>
 
 We also looked at the distirbution of average rating. You can clearly see that there were significantly mor higher rated meals 
-<iframe src="./rating_distribution.html" width="800" height="600"></iframe>
+<iframe src="assets/rating_distribution.html" width="800" height="600"></iframe>
 
 ### Bivariate Analysis 
 
 The bivariate analysis we decided to perform was on the prop_protein column and the rating column. We created the follwing bar chart, which suggests that most meals in genral were higher protein. It also suggest that most meals, high or low protein were given a 5 star rating, which perhaps suggested a flaw in the rating column. 
 
-<iframe src="./protein_rating_distribution.html" width="800" height="600"></iframe>
+<iframe src="assets/protein_rating_distribution.html" width="800" height="600"></iframe>
 
 ### Interesting Aggregates
 
@@ -129,7 +133,7 @@ This table aggregates the data by the rating and if a recipe is "high protein." 
 
 #### Line Plot: Proportion of Protein by Number of Steps
 
-<iframe src="./interesting_aggregates.html" width="800" height="600"></iframe>
+<iframe src="assets/interesting_aggregates.html" width="800" height="600"></iframe>
 
 This visualization shows the mean, median, max, and min proportion of protein as the number of recipe steps increases. It displays insights into whether complex recipes (with more steps) tend to have higher or lower protein proportions. The pattern of decreasing maximum protein proportion could indicate protein being a less complex dish to make.
 
@@ -148,9 +152,9 @@ Significance Level: 0.05
 
 We then ran a permutation test by shuffling the prop_protein column 500 times to simulate mean differences from the observed statistic and obtain a p-value
 
-<iframe src="./proteindistributionsdiff.html" width="800" height="600"></iframe>
+<iframe src="assets/proteindistributionsdiff.html" width="800" height="600"></iframe>
 
-<iframe src="./protein_missingness.html" width="800" height="600"></iframe>
+<iframe src="assets/protein_missingness.html" width="800" height="600"></iframe>
 
 We obtained a p-value of 0.02 which is less than 0.05 and as a result rejected the null hypothesis. This suggests the missingness of `rating` does, as a result, depend on `prop_protein`. 
 
@@ -160,7 +164,7 @@ Test Statistic: The absolute difference of mean minutes to make the recipe of th
 Significance Level: 0.05
 
 <iframe src="./assets/distributionmins.html" width="800" height="600"></iframe>
-<iframe src="./minutes_missingness.html" width="800" height="600"></iframe>
+<iframe src=".assets/minutes_missingness.html" width="800" height="600"></iframe>
 
 We then ran a permutation test by shuffling the minutes column 500 times to simulate mean differences from the observed statistic and obtain a p-value
 We obtained a p-value of 0.132 which is greater than 0.05 and as a result failed to reject the null hypothesis. This suggests the missingness of `rating` does not depend on `minutes`. 
@@ -173,7 +177,7 @@ Alternative Hypothesis: The absolute mean difference in the number of steps betw
 Test Statistic: The absolute difference in mean between the distribution of n_steps of high_protein recipes and low protein recipes.
 Test signficance: 0.05
 
-<iframe src="./assets/hypothesis_testing.html" width="800" height="600"></iframe>
+<iframe src="assets/hypothesis_testing.html" width="800" height="600"></iframe>
 
 
 We performed a permutation test by shuffling the `high_protein` column of True and False values 1000 times. we obtained a p-value of 0. Hence, we rejected the null hypothesis. Our data suggests high protein and low protein recipes do not have the same mean number of steps. 
@@ -256,7 +260,7 @@ Null Hypothesis: The model is fair in both groups (High Sugar and Low Sugar reci
 Alt Hypothesis: The model is not fair in both groups. The obs difference in RMSE is statistically significant and not due to random chance.
 Test Significance: 0.05
 
-<iframe src="./assets/fairness.html" width="800" height="600"></iframe>
+<iframe src="assets/fairness.html" width="800" height="600"></iframe>
 
 
 

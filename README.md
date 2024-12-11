@@ -159,7 +159,7 @@ Alternate Hypothesis: The missingness of ratings does depend on minutes taken to
 Test Statistic: The absolute difference of mean minutes to make the recipe of the distribution of the group without missing ratings and the distribution of the group with missing ratings.
 Significance Level: 0.05
 
-<iframe src="./assets/minsistribution.html" width="800" height="600"></iframe>
+<iframe src="./assets/minsdistribution.html" width="800" height="600"></iframe>
 <iframe src="assets/minutes_missingness.html" width="800" height="600"></iframe>
 
 We then ran a permutation test by shuffling the minutes column 500 times to simulate mean differences from the observed statistic and obtain a p-value
@@ -256,7 +256,6 @@ Null Hypothesis: The model is fair in both groups (High Sugar and Low Sugar reci
 Alt Hypothesis: The model is not fair in both groups. The obs difference in RMSE is statistically significant and not due to random chance.
 Test Significance: 0.05
 
-<iframe src="assets/fairness.html" width="800" height="600"></iframe>
 
 
 

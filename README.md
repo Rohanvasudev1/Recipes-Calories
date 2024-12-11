@@ -56,12 +56,12 @@ To merge the dataframes, we took the following steps:
 
 With the other modifications that we discuss in the introduction section, we were left with a dataset head that looked like this. 
 
-<iframe src="assets/dataframe_head.html" width="800" height="600"></iframe>
+<iframe src="./assets/dataframe_head.html" width="800" height="600"></iframe>
 
 
 
 
-And the following columns:
+And the following columns:<br>
 
 
 | **Column Name**      | **Description**                                                                                              | **How It Was Obtained**                                                                                                                   |

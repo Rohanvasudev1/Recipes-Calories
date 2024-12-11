@@ -103,8 +103,6 @@ Next, we performed univariate analysis on the n-steps column to see its distribu
 
 <iframe src="assets/n_steps.html" width="800" height="600"></iframe>
 
-We also looked at the distirbution of average rating. You can clearly see that there were significantly mor higher rated meals 
-<iframe src="assets/rating_distribution.html" width="800" height="600"></iframe>
 
 ### Bivariate Analysis 
 

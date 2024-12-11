@@ -56,9 +56,7 @@ To merge the dataframes, we took the following steps:
 
 With the other modifications that we discuss in the introduction section, we were left with a dataset head that looked like this. 
 
-<iframe src="./assets/dataframe_head.html" width="800" height="600"></iframe>
-
-
+<iframe src="assets/dataframe_head.html" width="800" height="600"></iframe>
 
 
 And the following columns:<br>
@@ -99,7 +97,7 @@ And the following columns:<br>
 First, univariate analysis was performed on the protein proportion column to see the distribution of protein percentage in the dataset. This clearly demonstartes that most meals have a fairly low proportion of protein
 
 
-<iframe src="assets/protein_distribution.html" width="800" height="600"></iframe>
+<iframe src="assets/protein_distirrbution.html" width="800" height="600"></iframe>
 
 Next, we performed univariate analysis on the n-steps column to see its distribution as well. This demonstrates that most recipes don't have that many steps and suggests an overall lesser complexity than I initially thought
 
@@ -112,7 +110,7 @@ We also looked at the distirbution of average rating. You can clearly see that t
 
 The bivariate analysis we decided to perform was on the prop_protein column and the rating column. We created the follwing bar chart, which suggests that most meals in genral were higher protein. It also suggest that most meals, high or low protein were given a 5 star rating, which perhaps suggested a flaw in the rating column. 
 
-<iframe src="assets/protein_rating_distribution.html" width="800" height="600"></iframe>
+<iframe src="assets/bivariate.html" width="800" height="600"></iframe>
 
 ### Interesting Aggregates
 
@@ -163,8 +161,8 @@ Alternate Hypothesis: The missingness of ratings does depend on minutes taken to
 Test Statistic: The absolute difference of mean minutes to make the recipe of the distribution of the group without missing ratings and the distribution of the group with missing ratings.
 Significance Level: 0.05
 
-<iframe src="./assets/distributionmins.html" width="800" height="600"></iframe>
-<iframe src=".assets/minutes_missingness.html" width="800" height="600"></iframe>
+<iframe src="./assets/minsistribution.html" width="800" height="600"></iframe>
+<iframe src="assets/minutes_missingness.html" width="800" height="600"></iframe>
 
 We then ran a permutation test by shuffling the minutes column 500 times to simulate mean differences from the observed statistic and obtain a p-value
 We obtained a p-value of 0.132 which is greater than 0.05 and as a result failed to reject the null hypothesis. This suggests the missingness of `rating` does not depend on `minutes`. 

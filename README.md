@@ -136,6 +136,137 @@ This visualization shows the mean, median, max, and min proportion of protein as
 One column that was NMAR was `review` was the missingness of that data column was dependent on the quality of the review as people have a tendency to put in effort when they enjoyed something. If they didn't enjoy it, they will not want to give the recipe, that they wasted their time on, more time. Hence, many of the less positive reviews would be missing. 
 
 ### Missingness Dependency 
+We decided to look at the `rating` column to determine what could be the possible source of its missingness. The first column we investigated to demonstrate that it was MAR was prop_protein. 
+
+Null Hypothesis: The missingness of ratings doesn't depend on the proportion of protein in the recipe.
+Alternate Hypothesis: The missingness of ratings does depend on the proportion of protein in the recipe
+Test Statistic: The absolute difference of mean in the proportion of protein of the distribution of the group without missing ratings and the distribution of the group with missing ratings.
+Significance Level: 0.05
+
+We then ran a permutation test by shuffling the prop_protein column 500 times to simulate mean differences from the observed statistic and obtain a p-value
+
+*insert 2 graphs*
+
+We obtained a p-value of 0.02 which is less than 0.05 and as a result rejected the null hypothesis. This suggests the missingness of `rating` does, as a result, depend on `prop_protein`. 
+
+Null Hypothesis: The missingness of ratings doesn't depend on the minutes taken to make the recipe.
+Alternate Hypothesis: The missingness of ratings does depend on minutes taken to make the recipe
+Test Statistic: The absolute difference of mean minutes to make the recipe of the distribution of the group without missing ratings and the distribution of the group with missing ratings.
+Significance Level: 0.05
+
+*insert 2 graphs 
+
+We then ran a permutation test by shuffling the minutes column 500 times to simulate mean differences from the observed statistic and obtain a p-value
+We obtained a p-value of 0.132 which is greater than 0.05 and as a result failed to reject the null hypothesis. This suggests the missingness of `rating` does not depend on `minutes`. 
+
+## Hypothesis Testing
+
+The metric that we are interested in predicting is `calories`. Two of the metrics that we would like to use are `protein` and `n_steps`. we wanted to see if there was correlation between the 2 variables. Hence, for hypothesis testing we utilized the following hypotheses.
+Null Hypothesis: The absolute mean difference in the number of steps between high-protein and low-protein meals is zero. Any observed difference is due to random chance.
+Alternative Hypothesis: The absolute mean difference in the number of steps between high-protein and low-protein meals is greater than zero, indicating that high-protein and low-protein meals have different complexities. 
+Test Statistic: The absolute difference in mean between the distribution of n_steps of high_protein recipes and low protein recipes.
+Test signficance: 0.05
+
+*insert graph here*
+
+We performed a permutation test by shuffling the `high_protein` column of True and False values 1000 times. we obtained a p-value of 0. Hence, we rejected the null hypothesis. Our data suggests high protein and low protein recipes do not have the same mean number of steps. 
+
+## Framing a prediction problem 
+We plan to predict the calories of a recipe, which would be a regression problem. This prediction would be based on its nutritional composition and preparation complexity. The response variable is calories and the features include `protein`, `sugar`, `avg rating`, `n_steps` and `n_ingredients`.
+
+As mentioned above, calorie insights can help people make informed dietary adjustments that align with their nutritional goals. 
+
+The metric we chose to use was mainly RMSE. However, we also used R^2. Root Mean Squared Error was preferred as it allows for us to detrermine average magnitude of prediction errors. 
+We chose the follwoing features because: 
+  - Nutritional composition: Variables like protein and sugar are directly correlated with the calorie count in meals. Ie Higher protein means mroe calories. 
+  - Recipe complexity: Variables like n_steps and n_ingredients also have a slight correlation as more steps means a bigger meal and perhaps a higher calorie count 
+  - Avg rating was also used because higher ratings tend to correlate with higher calorie meals 
+These features were chose as a result of prior bivariate analysis done before starting the project to understand the dataset better. 
+
+## Baseline Model 
+
+For the baseline model, we utilized the following features:
+- **`n_steps`** : number of steps required to complete a recipe
+- **`n_ingredients`** : number of ingredients in a recipe
+- **`protein`** : amount of protein (measured in PDV)
+- **`avg rating`** : average rating for the recipe
+
+The features were all numerical so no one hot encoding was required.
+The model used was a **Random Forest Regressor** with 100 decision trees.
+We also dropped any rows with NAN values as there were very few of them and the dataframe is over 200000 rows long so these missing values were minor.
+We also used a 20 training 80 test split
+
+
+The performance of our baseline model was as follows:
+    - **R² Score**: 0.758
+    - **Root Mean Squared Error (RMSE)**: 289 
+    Both results are to 3 signficant figures. 
+
+## Final Model
+
+### Features Used
+For the final model, we utilzied the following features:
+- **`steps_per_ingredient`** : number of steps divided by the number of ingredients. This feature gives a better indication of recipe complexity than just n_steps alone.
+- **`protein`** : amount of protein (measured in PDV).
+- **`avg rating`**: average user rating for the recipe.
+- **`sugar`** : amount of sugar content per recipe (measured in PDV).
+
+These features were selected because:
+- **`steps_per_ingredient`** captures recipe complexity, which may correlate with calorie count.
+- **`protein`** and **`sugar`** directly contribute to the caloric value.
+- **`avg rating`** can indicate trends identified in prior bivariate analysis with the calorie content.
+
+### Transformations Applied
+The following transformations were carried out using ColumnTransformer:
+- **StandardScaler**: Applied to **`steps_per_ingredient`** and **`avg rating`** to standardize to a mean of 0 and standard deviation of 1.
+- **QuantileTransformer**: Applied to **`protein`** and **`sugar`** to transform to normal distributions for better handling of skewed data.
+
+### Model and Hyperparameter Tuning
+The model used was a **Random Forest Regressor**. A `GridSearchCV` was performed to identify the best hyperparameters, with the following ranges:
+- **`n_estimators`**: [100, 200, 300]. These were used to see the tradeoff between computational efficiency and accuracy.
+- **`max_depth`**: [10, 20, 30, 40, 50]. This was used to see at what point overfitting occurs 
+- **`min_samples_leaf`**: [1, 2, 4]. These numbers also helped prevent overfitting through overly specific leaf nodes.
+
+The best hyperparameters found were:
+- **`max_depth`**: 40
+_ **`min_samples_leaf`**: 1
+- **`clf__n_estimators`**: 200
+
+### Performance
+The model was evaluated using the following metrics:
+- **R² Score**: 0.922
+- **Root Mean Squared Error (RMSE)**: 165
+Again to 3 significant figures
+
+### Evaluation
+The final model showed significant improvement. By using modified features and feature engineering, the model seemingly imporved extensively in predicting calories.
+
+## Fairness Analysis
+To analyze the fairness of our analysis in our Random Forest Regressor in predicting calories, we split our test data into high sugar recipes and low sugar recipes by creating a new column called `high_sugar` with boolean values. We then used our test statistic as the absolute RMSE difference in each group as RMSE was the statistic we used for evaluation of our model performance. We then shuffled our high_sugar column 1000 times to see how the RMSE differed and perform a permutation test. A p-value was computed as a result as the proportion of permuted statistics greater than or equal to the observed statistic. We obtained a value of 0.02 and thus rejected our null hypothesis described below.
+
+### Details of the Hypothesis Test
+Null Hypothesis: The model is fair in both groups (High Sugar and Low Sugar recipes). Any observed difference in RMSE between the groups is due to random chance.
+Alt Hypothesis: The model is not fair in both groups. The obs difference in RMSE is statistically significant and not due to random chance.
+Test Significance: 0.05
+
+
+
+
+
+  
+  
+
+  
+
+  
+  
+  
+
+
+
+
+
+
 
 
 

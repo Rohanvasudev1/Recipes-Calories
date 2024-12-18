@@ -1,4 +1,4 @@
-# Recipes-Calories
+# Recipes Calorie Predictor 
 ## Introduction 
 The aim of this project was to investigate the relationship between various metrics and predict the calories of a meal using a Random Forest Regressor. The dataset used focuses on recipes and includes attributes such as the number of ingredients, steps, and nutritional values like protein, carbohydrates and fat. The objective was to create a model pipeline and evaluate its performance while gaining insights form the data throughout this nporcess by using exploratory data analysis 
 

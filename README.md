@@ -2,8 +2,6 @@
 ## Introduction 
 The aim of this project was to investigate the relationship between various metrics and predict the calories of a meal using a Random Forest Regressor. The dataset used focuses on recipes and includes attributes such as the number of ingredients, steps, and nutritional values like protein, carbohydrates and fat. The objective was to create a model pipeline and evaluate its performance while gaining insights form the data throughout this nporcess by using exploratory data analysis 
 
-Write about dataset we used and reason for research here.
-
 The recipe and interaction datasets were merged on id and recipe id to create a recipes datset with ratings and reviews that were used for advanced analysis. 
 
 The recipes dataset contains 83782 rows, indicating 83782 unique recipes. The data was presented using the following columns:
